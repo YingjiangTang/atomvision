@@ -15,7 +15,10 @@ def vgg(num_labels=5, in_features=4096):
 def resnet(num_labels=5, in_features=2048):
     """Get Resnet model."""
     model = models.resnet101(pretrained=True)
-    model.fc = nn.Linear(in_features, num_labels)
+    model.fc = nn.Sequential(
+        nn.Linear(in_features, num_labels),
+        nn.LogSoftmax(dim=1)
+    )
     return model
 
 
